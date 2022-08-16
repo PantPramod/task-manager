@@ -1,7 +1,7 @@
 import axios from "axios";
 
  const instance = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'https://task-manager-backend-pramod.herokuapp.com/api/',
     // timeout: 1000,
     // headers: {'X-Custom-Header': 'foobar'}
   });
