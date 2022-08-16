@@ -19,7 +19,7 @@ getUserName();
 
   return (
     <div className=''>
-         <nav className=' bg-blue-500 text-white p-[10px] '>
+         <nav className='lig text-white p-[10px] '>
             <ul className='max-w-[1000px] flex justify-evenly items-center ml-auto mr-auto'>
                 <li className='flex items-center hover:text-yellow-100 transition-all cursor-pointer'><FaClipboard className='mr-[5px]'/>Board</li>
                 <li className='flex items-center  hover:text-yellow-100 transition-all cursor-pointer'><BsCardList className='mr-[5px]'/>List</li>

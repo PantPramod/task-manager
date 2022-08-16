@@ -24,3 +24,8 @@
   background: -webkit-linear-gradient(right, #fc00ff, #00dbde);
   
 }
+
+.lig{
+  background-image: -webkit-linear-gradient(right, #00dbde, #fc00ff);
+    
+}

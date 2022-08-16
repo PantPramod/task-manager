@@ -71,6 +71,10 @@ const Register = () => {
                     />
                 </div>
                 <button onClick={registerHandler} className="login-btn w-[100%] p-3 rounded-[20px] text-white">Register</button>
+                <p
+                 onClick={()=>navigate('/')} 
+                 className= 'text-center  mt-4  text-blue-600 font-semibold cursor-pointer '
+                 >Already have an Account </p>  
             </div>
         </div>
     )

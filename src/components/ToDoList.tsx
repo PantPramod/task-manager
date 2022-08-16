@@ -17,19 +17,19 @@ const ToDoList = ({ heading }: propType) => {
     const [List, setList] = useState<ListType[]>([])
     const [userdata, setUserdata] = useState<any>('');
     const [todoId, setTodoId] = useState<number | string>('')
-
+    const  [flag, setFlag] = useState(false); 
+    
     useEffect(() => {
         const getUserInfo = async () => {
             const userInfo = await localStorage.getItem("userInfo")
             const user = await JSON.parse(userInfo || "")
             setUserdata(user)
             const result = await axios.post('todo/get', { userId: user._id })
-            console.log("result===>", result)
             setList(result.data.result)
         }
         getUserInfo();
 
-    }, [showAddComponent, showActionList])
+    }, [flag])
 
     const openAddComponent = () => {
         setShowAddComponent(true)
@@ -45,7 +45,10 @@ const ToDoList = ({ heading }: propType) => {
             userId: userdata._id
 
         })
-        console.log("res==>", res)
+        if(res){
+            setFlag((prev)=>!prev)
+        }
+        
     }
 
     const del = async (userId: number | string) => {
@@ -55,9 +58,11 @@ const ToDoList = ({ heading }: propType) => {
                 userId
             }
         })
-        setShowActionList(false)
-
-        console.log("res==>", res)
+        if(res){
+            setFlag((prev)=>!prev)
+            setShowActionList(false)    
+        }
+        
     }
 
 
@@ -73,7 +78,7 @@ const ToDoList = ({ heading }: propType) => {
                 todo={(title: string, description: string, priority: "low" | "medium" | "high" | "veryHigh") => addToList(title, description, priority)}
             />
         }
-        <div className='border  p-[20px] pb-0 flex-1 rounded bg-slate-200  mr-[10px] self-start'>
+        <div className=' p-[20px] pb-0 flex-1 rounded bg-slate-600  mr-[10px] self-start'>
             <div className='flex bg-white items-center border rounded mb-5 justify-between'>
                 <div className='flex items-center '>
                     <h1 className='py-2 pl-1 rounded font-bold text-slate-600 text-[16px]'>{heading}</h1>

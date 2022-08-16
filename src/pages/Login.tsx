@@ -54,6 +54,10 @@ const Login = () => {
                     />
                 </div>
                 <button onClick={loginHandler} className="login-btn w-[100%] p-3 rounded-[20px] text-white">Login</button>
+                 <p
+                 onClick={()=>navigate('/register')} 
+                 className= 'text-center  mt-4  text-blue-600 font-semibold cursor-pointer '
+                 >Create an Account</p> 
             </div>
         </div>
     )
