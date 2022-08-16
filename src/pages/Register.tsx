@@ -16,7 +16,7 @@ const Register = () => {
                     password
                 })
                 if(res.status===200){
-                    navigate('/login', {replace:true})
+                    navigate('/', {replace:true})
                 }
                 console.log("res", res)
             }
