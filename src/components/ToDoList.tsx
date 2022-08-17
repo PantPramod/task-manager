@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import AddComponent from './AddComponent'
 import { RiFlag2Fill } from 'react-icons/ri';
 import { BsThreeDots } from 'react-icons/bs';
@@ -9,27 +9,29 @@ import axios from '../Helper/axios';
 
 
 type propType = {
-    heading: "todo" | "progress" | "review" | "done"
+    heading: "todo" | "progress" | "review" | "done",
+    List: ListType[],
+    setList: Dispatch<SetStateAction<ListType[]>>
 }
-const ToDoList = ({ heading }: propType) => {
+const ToDoList = ({ heading, List, setList }: propType) => {
     const [showAddComponent, setShowAddComponent] = useState(false);
     const [showActionList, setShowActionList] = useState(false);
-    const [List, setList] = useState<ListType[]>([])
     const [userdata, setUserdata] = useState<any>('');
     const [todoId, setTodoId] = useState<number | string>('')
-    const  [flag, setFlag] = useState(false); 
-    
+    const [flag, setFlag] = useState(false);
+
     useEffect(() => {
         const getUserInfo = async () => {
             const userInfo = await localStorage.getItem("userInfo")
             const user = await JSON.parse(userInfo || "")
             setUserdata(user)
             const result = await axios.post('todo/get', { userId: user._id })
-            setList(result.data.result)
+            setList((prev) => [...result.data.result])
+            console.log("useEffect runs")
         }
         getUserInfo();
 
-    }, [flag])
+    }, [flag, setList])
 
     const openAddComponent = () => {
         setShowAddComponent(true)
@@ -45,10 +47,10 @@ const ToDoList = ({ heading }: propType) => {
             userId: userdata._id
 
         })
-        if(res){
-            setFlag((prev)=>!prev)
+        if (res) {
+            setFlag((prev) => !prev)
         }
-        
+
     }
 
     const del = async (userId: number | string) => {
@@ -58,15 +60,19 @@ const ToDoList = ({ heading }: propType) => {
                 userId
             }
         })
-        if(res){
-            setFlag((prev)=>!prev)
-            setShowActionList(false)    
+        if (res) {
+            setFlag((prev) => !prev)
+            setShowActionList(false)
         }
-        
+
     }
 
 
-    const changeStatus = (_id: number | string, status: "todo" | "progress" | "review" | "done", index: number) => {
+    const changeStatus = async (_id: number | string, status: "todo" | "progress" | "review" | "done", index: number) => {
+        const gettodo = await axios.patch(`/todo/${_id}`, { type: status })
+        console.log("updated=====>", gettodo.data)
+        List[index] = gettodo.data
+        setList([...List])
 
     }
 
@@ -99,7 +105,7 @@ const ToDoList = ({ heading }: propType) => {
                                     onClick={() => { setTodoId(item._id); setShowActionList((prev) => !prev) }}
                                     className='rounded-full bg-slate-300 w-[25px] h-[25px] p-[5px] cursor-pointer' color='black' />
                                 {showActionList && item._id === todoId &&
-                                    <div className='z-10 absolute shadow bg-slate-200 text-slate-600 rounded text-[14px] mt-[30px]  ml-[195px]  w-[200px] mr-[10px]'>
+                                    <div className='z-10 absolute shadow bg-slate-200 text-slate-600 rounded text-[14px] mt-[30px] ml-[-2rem] w-[160px]'>
                                         <p
                                             onClick={() => del(item._id)}
                                             className='p-2 z-30 cursor-pointer hover:font-bold'>Delete</p>

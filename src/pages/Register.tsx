@@ -33,7 +33,7 @@ const Register = () => {
     return (
         <div className='login flex justify-center'>
             <div className='bg-white w-[500px] my-4 rounded-[14px] p-10'>
-                <h1 className='text-center text-[40px] font-bold mb-10'>Login</h1>
+                <h1 className='text-center text-[40px] font-bold mb-10'>Register</h1>
                 <div className='ml-5'>Username</div>
                 <div className='flex border-b-2 mb-10 items-center p-[7px]'>
                     <MdOutlinePersonOutline size={25} className="mx-2"/>
